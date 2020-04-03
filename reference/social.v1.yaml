@@ -131,7 +131,8 @@ paths:
   '/products/:id':
     get:
       summary: Get Products By Id
-      tags: []
+      tags:
+        - product
       responses:
         '200':
           description: OK
@@ -144,7 +145,8 @@ paths:
   '/products/barcode/:barcode':
     get:
       summary: Get Product By barcode
-      tags: []
+      tags:
+        - product
       responses:
         '200':
           description: OK

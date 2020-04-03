@@ -8,8 +8,6 @@ paths:
   '/scan/:barcode':
     get:
       summary: Scan barcode
-      tags:
-        - products
       responses:
         '200':
           description: OK
@@ -20,6 +18,8 @@ paths:
               examples: {}
       operationId: scan-products
       description: ''
+      tags:
+        - scan
 components:
   schemas:
     ProductDetail:

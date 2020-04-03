@@ -10,7 +10,14 @@ paths:
       summary: Your GET endpoint
       tags:
         - products
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetail'
+              examples: {}
       operationId: scan-products
       description: ''
 components:

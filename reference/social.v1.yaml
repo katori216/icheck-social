@@ -20,6 +20,114 @@ paths:
       description: ''
       tags:
         - scan
+  /products:
+    get:
+      summary: List Products
+      tags:
+        - product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  rows:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductDetail'
+      operationId: get-products
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: limit
+        - schema:
+            type: integer
+          in: query
+          name: offset
+        - schema:
+            type: string
+            example: '-id'
+          in: query
+          name: order
+          description: ''
+        - schema:
+            type: number
+          in: query
+          name: owner_id
+          description: là id của doanh nghiệp sở hữu
+        - schema:
+            type: string
+          in: query
+          name: category_id
+          description: id của danh mục
+        - schema:
+            type: string
+          in: query
+          name: search
+          description: Tìm kiếm theo tên hoặc mã barcode
+        - schema:
+            type: string
+          in: query
+          name: enterprise_search
+          description: Tìm theo tên hoặc mã doanh nghiệp sở hữu
+        - schema:
+            type: string
+          in: query
+          name: ids
+          description: 'nằm trong danh sách id, vd: 123,234,345'
+        - schema:
+            type: string
+          in: query
+          name: not_ids
+          description: 'ngoài trừ các id, vd: 123,234,345'
+        - schema:
+            type: boolean
+          in: query
+          name: verified
+          description: đã xác thực
+        - schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+          in: query
+          name: scan_state
+          description: 'trạng thái quét - 1: cho quét, 2: không cho quét, 3: ẩn do doanh nghiệp yêu cầu'
+        - schema:
+            type: number
+            enum:
+              - 1
+              - 0
+          in: query
+          name: empty_image
+          description: 'không có ảnh - 1: đúng, 2: sai'
+        - schema:
+            type: number
+          in: query
+          name: empty_name
+          description: 'không có tên - 1: đúng, 2: sai'
+        - schema:
+            type: number
+          in: query
+          name: empty_owner
+          description: 'không có doanh nghiệp sở hữu - 1: đúng, 2: sai'
+        - schema:
+            type: number
+          in: query
+          name: empty_price
+          description: 'không có giá - 1: đúng, 2: sai'
+        - schema:
+            type: number
+          in: query
+          name: empty_category
+          description: 'không thuộc danh mục - 1: đúng, 2: sai'
+      description: Danh sách sản phẩm iCheck
 components:
   schemas:
     ProductDetail:

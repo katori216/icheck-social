@@ -93,9 +93,9 @@ paths:
         - schema:
             type: string
             enum:
-              - '1'
-              - '2'
-              - '3'
+              - 1
+              - 2
+              - 3
           in: query
           name: scan_state
           description: 'trạng thái quét - 1: cho quét, 2: không cho quét, 3: ẩn do doanh nghiệp yêu cầu'

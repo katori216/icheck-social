@@ -7,7 +7,7 @@ servers:
 paths:
   '/scan/:barcode':
     get:
-      summary: Your GET endpoint
+      summary: Scan barcode
       tags:
         - products
       responses:

@@ -128,6 +128,32 @@ paths:
           name: empty_category
           description: 'không thuộc danh mục - 1: đúng, 2: sai'
       description: Danh sách sản phẩm iCheck
+  '/products/:id':
+    get:
+      summary: Get Products By Id
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetail'
+      operationId: 'get-products-:id'
+      description: ''
+  '/products/barcode/:barcode':
+    get:
+      summary: Get Product By barcode
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetail'
+      operationId: get-products-barcode
+    parameters: []
 components:
   schemas:
     ProductDetail:

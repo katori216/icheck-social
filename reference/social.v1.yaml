@@ -1,0 +1,199 @@
+openapi: 3.0.0
+info:
+  title: social
+  version: '1.0'
+servers:
+  - url: 'https://api.dev.icheck.com.vn/api/v1'
+paths:
+  '/scan/:barcode':
+    get:
+      summary: Your GET endpoint
+      tags:
+        - products
+      responses: {}
+      operationId: scan-products
+      description: ''
+components:
+  schemas:
+    ProductDetail:
+      title: ProductDetail
+      type: object
+      description: Thông tin chi tiết sản phẩm
+      x-examples:
+        example-1: {}
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        barcode:
+          type: string
+        price:
+          type: number
+        image:
+          type: string
+        thumbnails:
+          $ref: '#/components/schemas/Thumbnails'
+        owner:
+          $ref: '#/components/schemas/EnterpriseDetail'
+        vendor:
+          $ref: '#/components/schemas/EnterpriseDetail'
+        distributors:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseDetail'
+        disable_contribution:
+          type: boolean
+        scan_count:
+          type: integer
+        scan_status:
+          type: boolean
+        verified:
+          type: boolean
+        is_visible:
+          type: boolean
+        certificates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Thumbnails'
+        informations:
+          type: array
+          items:
+            type: string
+    Thumbnails:
+      title: Thumbnails
+      type: object
+      description: Link ảnh theo từng kích thước
+      properties:
+        original:
+          type: string
+        square:
+          type: string
+        thumbnail:
+          type: string
+        small:
+          type: string
+        medium:
+          type: string
+      x-examples:
+        example-1:
+          original: 'http://icheckcdn.net/images/original/-TheHulk/652348943e/1486178285_1709fdfea0554dc7b4547614c5182ad3_829619.jpg'
+          square: 'http://icheckcdn.net/images/100x100/-TheHulk/652348943e/1486178285_1709fdfea0554dc7b4547614c5182ad3_829619.jpg'
+          thumbnail: 'http://icheckcdn.net/images/240x240/-TheHulk/652348943e/1486178285_1709fdfea0554dc7b4547614c5182ad3_829619.jpg'
+          small: 'http://icheckcdn.net/images/240x240/-TheHulk/652348943e/1486178285_1709fdfea0554dc7b4547614c5182ad3_829619.jpg'
+          medium: 'http://icheckcdn.net/images/375x375/-TheHulk/652348943e/1486178285_1709fdfea0554dc7b4547614c5182ad3_829619.jpg'
+    UserDetail:
+      title: UserDetail
+      type: object
+      description: Thông tin chi tiết User
+      properties:
+        id:
+          type: number
+        Thông:
+          type: string
+    EnterpriseDetail:
+      title: EnterpriseDetail
+      type: object
+      description: Thông tin chi tiết doanh nghiệp
+      properties:
+        id:
+          type: number
+        type:
+          type: integer
+        name:
+          type: string
+        avatar:
+          type: string
+        cover:
+          type: string
+        avatar_thumbnails:
+          $ref: '#/components/schemas/Thumbnails'
+        cover_thumbnails:
+          $ref: '#/components/schemas/Thumbnails'
+        email:
+          type: string
+        phone:
+          type: string
+        gln_code:
+          type: string
+        gln_type:
+          type: string
+        address:
+          type: string
+        country:
+          $ref: '#/components/schemas/Country'
+        city:
+          $ref: '#/components/schemas/City'
+        district:
+          $ref: '#/components/schemas/District'
+        ward:
+          $ref: '#/components/schemas/Ward'
+        prefix:
+          type: string
+        tax:
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+        is_visible:
+          type: boolean
+        verify_stastus:
+          type: integer
+        supporter_id:
+          type: number
+        manager_id:
+          type: number
+        document:
+          type: string
+    Country:
+      title: Country
+      type: object
+      description: Thông tin quốc gia
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        code:
+          type: string
+    City:
+      title: City
+      type: object
+      description: Thông tin tỉnh thành phố
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        country_id:
+          type: integer
+    District:
+      title: District
+      type: object
+      description: Thông tin Quận Huyện
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        city_id:
+          type: integer
+    Ward:
+      title: Ward
+      type: object
+      description: Thông tin Phường Xã
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        district_id:
+          type: integer
+    Location:
+      title: Location
+      type: object
+      properties:
+        lat:
+          type: number
+        lng:
+          type: number
+      description: Tọa độ

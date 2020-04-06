@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: contribute
+  version: '1.0'
+  description: COntributions Api
+servers:
+  - url: 'https://api.dev.icheck.com.vn/api/v1'
+paths:
+  /contributions:
+    post
+      summary: Đóng góp sản phẩm
+      operationId: post-contributions
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContributeCreateBody'
+      description: Đóng góp sản phẩm
+      tags:
+        - contribute
+components:
+  schemas:
+    ContributeCreateBody:
+      title: ContributeCreateBody
+      type: object
+      description: ''
+      properties:
+        product_id:
+          type: integer
+          description: id sản phẩm
+        name:
+          type: string
+          description: tên sản phẩm
+        price:
+          type: number
+          description: giá sản phẩm
+        images:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: string
+        owner:
+          type: string
+        informations:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              type_id:
+                type: integer
+            required:
+              - content
+              - type_id
+      required:
+        - product_id
+    OwnerCreate:
+      title: OwnerCreate
+      type: object
+      description: Tạo mới doanh nghiệp sở hữu
+      properties:
+        name:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        email:
+          type: string
+        tax:
+          type: string
+      required:
+        - name
+        - phone
+        - address

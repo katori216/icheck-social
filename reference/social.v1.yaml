@@ -2,6 +2,7 @@ openapi: 3.0.0
 info:
   title: social
   version: '1.0'
+  description: Api iCheck Social
 servers:
   - url: 'https://api.dev.icheck.com.vn/api/v1'
 paths:
@@ -17,7 +18,7 @@ paths:
                 $ref: '#/components/schemas/ProductDetail'
               examples: {}
       operationId: scan-products
-      description: ''
+      description: Scan barcode
       tags:
         - product
   /products:
@@ -209,7 +210,7 @@ paths:
           in: query
           name: include
           description: 'incluide=detail : trả về giống detail'
-      description: ''
+      description: Danh sách sản phẩm liên quan
 components:
   schemas:
     ProductDetail:

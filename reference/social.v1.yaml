@@ -19,10 +19,10 @@ paths:
       operationId: scan-products
       description: ''
       tags:
-        - scan
+        - product
   /products:
     get:
-      summary: List Products
+      summary: Danh sách sản phẩm iCheck
       tags:
         - product
       responses:
@@ -38,58 +38,60 @@ paths:
                   rows:
                     type: array
                     items:
-                      $ref: '#/components/schemas/ProductDetail'
+                      $ref: '#/components/schemas/ProductItem'
       operationId: get-products
       parameters:
         - schema:
             type: integer
           in: query
           name: limit
+          description: ' '
         - schema:
             type: integer
           in: query
           name: offset
+          description: ' '
         - schema:
             type: string
             example: '-id'
           in: query
           name: order
-          description: ''
+          description: sắp xếp
         - schema:
             type: number
           in: query
           name: owner_id
-          description: là id của doanh nghiệp sở hữu
+          description: 'là id của doanh nghiệp sở hữu '
         - schema:
             type: string
           in: query
           name: category_id
-          description: id của danh mục
+          description: 'id của danh mục '
         - schema:
             type: string
           in: query
           name: search
-          description: Tìm kiếm theo tên hoặc mã barcode
+          description: 'Tìm kiếm theo tên hoặc mã barcode '
         - schema:
             type: string
           in: query
           name: enterprise_search
-          description: Tìm theo tên hoặc mã doanh nghiệp sở hữu
+          description: 'Tìm theo tên hoặc mã doanh nghiệp sở hữu '
         - schema:
             type: string
           in: query
           name: ids
-          description: 'nằm trong danh sách id, vd: 123,234,345'
+          description: 'nằm trong danh sách id, vd: 123,234,345 '
         - schema:
             type: string
           in: query
           name: not_ids
-          description: 'ngoài trừ các id, vd: 123,234,345'
+          description: 'ngoài trừ các id, vd: 123,234,345 '
         - schema:
             type: boolean
           in: query
           name: verified
-          description: đã xác thực
+          description: 'đã xác thực '
         - schema:
             type: string
             enum:
@@ -98,7 +100,7 @@ paths:
               - 3
           in: query
           name: scan_state
-          description: 'trạng thái quét - 1: cho quét, 2: không cho quét, 3: ẩn do doanh nghiệp yêu cầu'
+          description: 'trạng thái quét - 1: cho quét, 2: không cho quét, 3: ẩn do doanh nghiệp yêu cầu '
         - schema:
             type: number
             enum:
@@ -106,31 +108,41 @@ paths:
               - 0
           in: query
           name: empty_image
-          description: 'không có ảnh - 1: đúng, 2: sai'
+          description: 'không có ảnh - 1: đúng, 2: sai '
         - schema:
             type: number
           in: query
           name: empty_name
-          description: 'không có tên - 1: đúng, 2: sai'
+          description: 'không có tên - 1: đúng, 2: sai '
         - schema:
             type: number
           in: query
           name: empty_owner
-          description: 'không có doanh nghiệp sở hữu - 1: đúng, 2: sai'
+          description: 'không có doanh nghiệp sở hữu - 1: đúng, 2: sai '
         - schema:
             type: number
           in: query
           name: empty_price
-          description: 'không có giá - 1: đúng, 2: sai'
+          description: 'không có giá - 1: đúng, 2: sai '
         - schema:
             type: number
           in: query
           name: empty_category
-          description: 'không thuộc danh mục - 1: đúng, 2: sai'
+          description: 'không thuộc danh mục - 1: đúng, 2: sai '
+        - schema:
+            type: boolean
+          in: query
+          name: visibled
+          description: ẩn sản phẩm
+        - schema:
+            type: string
+          in: query
+          name: include
+          description: include=detail - trả về giống detail
       description: Danh sách sản phẩm iCheck
   '/products/:id':
     get:
-      summary: Get Products By Id
+      summary: Lấy chi tiết sản phẩm thông qua ID
       tags:
         - product
       responses:
@@ -141,10 +153,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductDetail'
       operationId: 'get-products-:id'
-      description: ''
+      description: Lấy chi tiết sản phẩm thông qua id
   '/products/barcode/:barcode':
     get:
-      summary: Get Product By barcode
+      summary: Lấy sản phẩm qua barcode
       tags:
         - product
       responses:
@@ -155,7 +167,49 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProductDetail'
       operationId: get-products-barcode
+      description: Lấy sản phẩm qua barcode
     parameters: []
+  '/products/:product_id/related-products':
+    get:
+      summary: Danh sách sản phẩm liên quan
+      tags:
+        - product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  rows:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductItem'
+      operationId: 'get-products-:product_id-related-products'
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: limit
+          description: ''
+        - schema:
+            type: integer
+          in: query
+          name: offset
+        - schema:
+            type: string
+          in: query
+          name: order
+          description: sắp xếp
+        - schema:
+            type: string
+          in: query
+          name: include
+          description: 'incluide=detail : trả về giống detail'
+      description: ''
 components:
   schemas:
     ProductDetail:
@@ -167,42 +221,82 @@ components:
       properties:
         id:
           type: integer
+          description: |
+            id của sản phẩm
         name:
           type: string
+          description: tên của sản phẩm
         barcode:
           type: string
+          description: mã barcode
         price:
           type: number
+          description: giá cả
         image:
           type: string
+          description: ảnh sản phẩm
         thumbnails:
           $ref: '#/components/schemas/Thumbnails'
         owner:
           $ref: '#/components/schemas/EnterpriseDetail'
-        vendor:
-          $ref: '#/components/schemas/EnterpriseDetail'
-        distributors:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnterpriseDetail'
         disable_contribution:
+          type: boolean
+          description: tắt tính năng đóng góp
+        verified:
+          type: boolean
+          description: đã xác thực
+        visibled:
+          type: boolean
+          description: ẩn sản phẩm
+        informations:
+          type: string
+        review_count:
+          type: integer
+          description: Tổng lượt review
+        question_count:
+          type: integer
+          description: Tổng số câu hỏi
+        can_scan:
           type: boolean
         scan_count:
           type: integer
-        scan_status:
-          type: boolean
-        verified:
-          type: boolean
-        is_visible:
-          type: boolean
+          description: Tổng lượt scan
+        product_level_id:
+          type: number
+          description: id level nguồn tạo
+        product_level_label:
+          type: string
+          description: tên nguồn tạo
+        certification_content:
+          type: string
         certificates:
           type: array
           items:
-            $ref: '#/components/schemas/Thumbnails'
-        informations:
+            type: string
+        video_urls:
           type: array
           items:
             type: string
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Thumbnails'
+        anti_counterfeiting:
+          type: string
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryItem'
+        alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertItem'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
     Thumbnails:
       title: Thumbnails
       type: object
@@ -340,3 +434,72 @@ components:
         lng:
           type: number
       description: Tọa độ
+    CategoryItem:
+      title: CategoryItem
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      description: Category Item
+    AlertItem:
+      title: AlertItem
+      type: object
+      description: Alert Item
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        alert_level:
+          type: string
+        description:
+          type: string
+        body:
+          type: string
+    ProductItem:
+      title: ProductItem
+      type: object
+      description: Product Item
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          description: tên sản phẩm
+        barcode:
+          type: string
+          description: mã barcode
+        image:
+          type: string
+        thumbnails:
+          $ref: '#/components/schemas/Thumbnails'
+        owner:
+          $ref: '#/components/schemas/EnterpriseDetail'
+        disable_contribution:
+          type: boolean
+          description: tắt tính năng đóng góp
+        verified:
+          type: boolean
+          description: đã xác thực
+        visibled:
+          type: boolean
+          description: ẩn sản phẩm
+        product_level_id:
+          type: integer
+        product_level_label:
+          type: string
+        anti_counterfeiting:
+          type: string
+        question_count:
+          type: integer
+        can_scan:
+          type: boolean
+        scan_count:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: integer
